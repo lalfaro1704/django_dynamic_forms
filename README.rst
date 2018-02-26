@@ -25,13 +25,17 @@ Install Django Dynamic Forms::
 
     pip install django_dynamic_forms
 
+Or install from Github repository::
+
+    pip install -e git://github.com/lalfaro1704/django_dynamic_forms#egg=django_dynamic_forms
+
 Add it to your `INSTALLED_APPS`:
 
 .. code-block:: python
 
     INSTALLED_APPS = (
         ...
-        'django_dynamic_forms.apps.Config',
+        'django_dynamic_forms',
         ...
     )
 
