@@ -10,17 +10,11 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
     list_display = ('name', 'field_type', )
 
-class DynamicAttributeInline(admin.TabularInline):
-    model = DynamicAttribute
-    extra = 1
 
 class DynamicFormAdmin(admin.ModelAdmin):
     model = DynamicForm
     icon = '<i class="material-icons">reorder</i>'
     list_display = ('name', 'parent', )
-    inlines = [
-        DynamicAttributeInline
-    ]
 
 
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)

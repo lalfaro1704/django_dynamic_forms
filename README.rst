@@ -39,19 +39,6 @@ Add it to your `INSTALLED_APPS`:
         ...
     )
 
-Add Django Dynamic Forms's URL patterns:
-
-.. code-block:: python
-
-    from django_dynamic_forms import urls as django_dynamic_forms_urls
-
-
-    urlpatterns = [
-        ...
-        url(r'^', include(django_dynamic_forms_urls)),
-        ...
-    ]
-
 Features
 --------
 
