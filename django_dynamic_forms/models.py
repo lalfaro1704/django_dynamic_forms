@@ -26,6 +26,9 @@ class DynamicAttribute(TimeStampedModel):
     class Meta:
         verbose_name_plural = _('dynamic attributes')
 
+    def __str__(self):
+        return "{} {}".format(self.name, self.field_type)
+
 
 class DynamicForm(TimeStampedModel):
     name = models.CharField(
@@ -47,6 +50,9 @@ class DynamicForm(TimeStampedModel):
     class Meta:
         verbose_name_plural = _('dynamic forms')
 
+    def __str__(self):
+        return "{} {}".format(self.name, self.parent)
+
 
 class ValueAttribute(TimeStampedModel):
     dynamic_form = models.ForeignKey(
@@ -62,3 +68,6 @@ class ValueAttribute(TimeStampedModel):
         null=True,
         verbose_name=_('value'),
         max_length=256)
+
+    def __str__(self):
+        return "{}".format(self.value)

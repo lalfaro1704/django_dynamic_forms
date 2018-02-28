@@ -22,7 +22,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
 class ValueAttributeAdmin(admin.ModelAdmin):
     model = ValueAttribute
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('dynamic_form__name', 'dynamic_attribute__name', 'value', )
+    list_display = ('dynamic_form', 'dynamic_attribute', 'value', )
 
 
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
