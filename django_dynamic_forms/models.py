@@ -26,7 +26,7 @@ class FormSector(TimeStampedModel, SoftDeletableModel):
         verbose_name_plural = _('form sector')
 
     def __str__(self):
-        return "{} {}".format(self.name)
+        return "{}".format(self.name)
 
 
 class DynamicAttribute(TimeStampedModel):
