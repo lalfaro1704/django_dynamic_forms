@@ -2,7 +2,7 @@
 
 from django.db import models
 
-from model_utils.models import TimeStampedModel
+from model_utils.models import TimeStampedModel, SoftDeletableModel
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -12,6 +12,21 @@ FIELD_TYPE = (
     ('CHK', _('Checkbox')),
     ('RDO', _('Radio'))
 )
+
+
+class FormSector(TimeStampedModel, SoftDeletableModel):
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=256)
+    code = models.CharField(
+        verbose_name=_('code'),
+        max_length=256)
+
+    class Meta:
+        verbose_name_plural = _('form sector')
+
+    def __str__(self):
+        return "{} {}".format(self.name)
 
 
 class DynamicAttribute(TimeStampedModel):
@@ -63,6 +78,10 @@ class ValueAttribute(TimeStampedModel):
         DynamicAttribute,
         on_delete=models.CASCADE,
         verbose_name=_('attribute'))
+    sector = models.ForeignKey(
+        FormSector,
+        on_delete=models.CASCADE,
+        verbose_name=_('form sector'))
     value = models.CharField(
         blank=True,
         null=True,
