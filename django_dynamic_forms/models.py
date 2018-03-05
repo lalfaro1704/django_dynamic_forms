@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unicodedata
 from django.db import models
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from django.utils.translation import ugettext_lazy as _
