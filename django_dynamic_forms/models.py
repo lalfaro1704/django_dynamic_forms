@@ -66,7 +66,8 @@ class DynamicForm(TimeStampedModel):
         return "{}".format(self.name)
 
     def elimina_tildes(self, name):
-        s = ''.join((c for c in unicodedata.normalize('NFD',str(name)) if unicodedata.category(c) != 'Mn'))
+        normalize = unicodedata.normalize('NFD',str(name))
+        s = ''.join((c for c in normalize if unicodedata.category(c) != 'Mn'))
         return s
 
     def form_code(self, name):
