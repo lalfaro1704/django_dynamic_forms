@@ -2,7 +2,7 @@
 from django.contrib import admin
 
 # Imports from project
-from .models import (DynamicForm, DynamicAttribute, ValueAttribute,
+from .models import (DynamicForm, DynamicAttribute, FormAttribute,
 					 FormSector)
 
 
@@ -30,20 +30,12 @@ class DynamicFormAdmin(admin.ModelAdmin):
 
 
 class ValueAttributeAdmin(admin.ModelAdmin):
-    model = ValueAttribute
+    model = FormAttribute
     icon = '<i class="material-icons">reorder</i>'
     list_display = ('dynamic_form', 'sector', 'dynamic_attribute', )
     list_filter = ['dynamic_form', 'sector']
 
 
-class FormSectorAdmin(admin.ModelAdmin):
-    model = FormSector
-    icon = '<i class="material-icons">reorder</i>'
-    list_display = ('name', 'code', )
-    list_filter = ['name', 'code']
-
-
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
-admin.site.register(ValueAttribute, ValueAttributeAdmin)
-admin.site.register(FormSector, FormSectorAdmin)
+admin.site.register(FormAttribute, ValueAttributeAdmin)
