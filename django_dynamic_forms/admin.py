@@ -16,8 +16,17 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
 class DynamicFormAdmin(admin.ModelAdmin):
     model = DynamicForm
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('name', 'children', 'is_wizard' )
+    list_display = ('name', 'parent', 'code', 'is_wizard' )
     list_filter = ['name']
+    fieldsets = ('name', 'parent', 'is_wizard', )
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj.id:
+            self.fieldsets = ('name', 'parent', 'code', 'is_wizard', )
+            self.readonly_fields = ('code', )
+
+        form = super(BookAdmin, self).get_form(request, obj, **kwargs)
+        return form
 
 
 class ValueAttributeAdmin(admin.ModelAdmin):
