@@ -49,7 +49,7 @@ class DynamicOptionSelects(TimeStampedModel):
         verbose_name_plural = _('dynamic option select')
 
     def __str__(self):
-        return "{} {}".format(self.name, self.field_type)
+        return "{}".format(self.name)
 
 
 class DynamicSelectList(TimeStampedModel):

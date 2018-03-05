@@ -1,7 +1,5 @@
 # Core Django imports
 from django.contrib import admin
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
