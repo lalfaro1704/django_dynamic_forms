@@ -10,7 +10,8 @@ FIELD_TYPE = (
     ('TXT', _('Text')),
     ('TXB', _('Textbox')),
     ('CHK', _('Checkbox')),
-    ('RDO', _('Radio'))
+    ('RDO', _('Radio')),
+    ('SLT', _('Select'))
 )
 
 
@@ -20,6 +21,9 @@ class FormSector(TimeStampedModel, SoftDeletableModel):
         max_length=256)
     code = models.CharField(
         verbose_name=_('code'),
+        max_length=256)
+    css_class = models.CharField(
+        verbose_name=_('css class'),
         max_length=256)
 
     class Meta:
@@ -55,12 +59,15 @@ class DynamicForm(TimeStampedModel):
         through_fields=('dynamic_form', 'dynamic_attribute'),
         verbose_name=_('attribute')
     )
-    parent = models.ForeignKey(
+    children = models.ForeignKey(
         'DynamicForm',
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name=_('parent'))
+        verbose_name=_('children'))
+    is_wizard = models.BooleanField(
+        default=False,
+        verbose_name=_('is wizard?'))
 
     class Meta:
         verbose_name_plural = _('dynamic forms')
@@ -74,19 +81,25 @@ class ValueAttribute(TimeStampedModel):
         DynamicForm,
         on_delete=models.CASCADE,
         verbose_name=_('form'))
-    dynamic_attribute = models.ForeignKey(
-        DynamicAttribute,
-        on_delete=models.CASCADE,
-        verbose_name=_('attribute'))
     sector = models.ForeignKey(
         FormSector,
         on_delete=models.CASCADE,
         verbose_name=_('form sector'))
+    dynamic_attribute = models.ForeignKey(
+        DynamicAttribute,
+        on_delete=models.CASCADE,
+        verbose_name=_('attribute'))
     value = models.CharField(
         blank=True,
         null=True,
         verbose_name=_('value'),
         max_length=256)
+    css_class = models.CharField(
+        verbose_name=_('css class'),
+        max_length=256)
+    is_required = models.BooleanField(
+        default=False,
+        verbose_name=_('is required?'))
 
     def __str__(self):
         return "{}".format(self.value)

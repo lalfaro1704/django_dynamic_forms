@@ -16,15 +16,15 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
 class DynamicFormAdmin(admin.ModelAdmin):
     model = DynamicForm
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('name', 'parent', )
+    list_display = ('name', 'children', 'is_wizard' )
     list_filter = ['name']
 
 
 class ValueAttributeAdmin(admin.ModelAdmin):
     model = ValueAttribute
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('dynamic_form', 'dynamic_attribute', 'value', )
-    list_filter = ['dynamic_form', 'dynamic_attribute']
+    list_display = ('dynamic_form', 'sector', 'dynamic_attribute', )
+    list_filter = ['dynamic_form', 'sector']
 
 
 class FormSectorAdmin(admin.ModelAdmin):
