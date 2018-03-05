@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
-                     DynamicOptionSelects)
+                     DynamicOptionSelects, SimpleOptionSelects)
 
 
 class DynamicOptionSelectsInlineAdmin(admin.TabularInline):
@@ -34,3 +34,4 @@ admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
 admin.site.register(DynamicOptionSelects)
+admin.site.register(SimpleOptionSelects)
