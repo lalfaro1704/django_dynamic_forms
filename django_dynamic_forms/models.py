@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import unicodedata
 from django.db import models
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
@@ -65,12 +65,17 @@ class DynamicForm(TimeStampedModel):
     def __str__(self):
         return "{}".format(self.name)
 
-    def form_code(self):
-        return "".format(
-            self.name.lower().replace(" ", "_") if self.name else "")
+    def elimina_tildes(self, name):
+        s = ''.join((c for c in unicodedata.normalize('NFD',str(name)) if unicodedata.category(c) != 'Mn'))
+        return s
+
+    def form_code(self, name):
+        code = name.lower().replace(" ", "_")
+        code = self.elimina_tildes(code)
+        return code
 
     def save(self, *args, **kwargs):
-        self.code = self.form_code()
+        self.code = self.form_code(self.name)
         super(DynamicForm, self).save(*args, **kwargs)
 
 
