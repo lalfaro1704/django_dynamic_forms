@@ -57,7 +57,7 @@ class DynamicForm(TimeStampedModel):
         blank=True,
         null=True,
         on_delete=models.CASCADE,
-        verbose_name=_('children'))
+        verbose_name=_('parent'))
 
     class Meta:
         verbose_name_plural = _('dynamic forms')
@@ -70,7 +70,7 @@ class DynamicForm(TimeStampedModel):
             self.name.lower().replace(" ", "_") if self.name else "")
 
     def save(self, *args, **kwargs):
-        self.code = form_code()
+        self.code = self.form_code()
         super(DynamicForm, self).save(*args, **kwargs)
 
 
