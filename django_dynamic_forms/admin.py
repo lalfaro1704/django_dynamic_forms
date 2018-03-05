@@ -2,8 +2,7 @@
 from django.contrib import admin
 
 # Imports from project
-from .models import (DynamicForm, DynamicAttribute, FormAttribute,
-					 FormSector)
+from .models import (DynamicForm, DynamicAttribute, FormAttribute)
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
