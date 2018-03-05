@@ -31,6 +31,29 @@ class DynamicAttribute(TimeStampedModel):
         return "{} {}".format(self.name, self.field_type)
 
 
+class DynamicSelectList(TimeStampedModel):
+    content_type = models.ForeignKey(
+        ContentType,
+        on_delete=models.DO_NOTHING
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey(
+        'content_type',
+        'object_id'
+    )
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=100
+    )
+
+    class Meta:
+        verbose_name = _('image library')
+        verbose_name_plural = _('image library')
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
 class DynamicForm(TimeStampedModel):
     name = models.CharField(
         verbose_name=_('name'),
