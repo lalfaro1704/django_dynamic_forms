@@ -67,7 +67,7 @@ class DynamicOptionSelects(TimeStampedModel):
         verbose_name_plural = _('dynamic option select')
 
     def __str__(self):
-        return "{}".format(self.name)
+        return "{}".format(self.content_object)
 
 
 class DynamicForm(TimeStampedModel):

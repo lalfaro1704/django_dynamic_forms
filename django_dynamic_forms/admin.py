@@ -6,22 +6,30 @@ from .models import (DynamicForm, DynamicAttribute, FormAttribute,
                      DynamicOptionSelects, SimpleOptionSelects)
 
 
+class DynamicOptionSelectsAdmin(admin.ModelAdmin):
+    icon = '<i class="material-icons">input</i>'
+
+
 class DynamicOptionSelectsInlineAdmin(admin.TabularInline):
     model = DynamicOptionSelects
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
-    list_display = ('name', 'field_type', )
-    list_filter = ['name', 'field_type']
+    search_fields = ('name', 'field_type', )
+    list_display = ('name', 'field_type','created', )
+    ordering = ('-created',)
+    list_filter = ['created', 'field_type']
     inlines = [DynamicOptionSelectsInlineAdmin]
 
 
 class DynamicFormAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('name', 'parent', 'code', 'is_wizard' )
-    list_filter = ['name']
-    readonly_fields = ('code', )
+    list_display = ('name', 'parent', 'code', 'is_wizard', 'created')
+    search_fields = ('name', 'parent__name', 'code')
+    list_filter = ['created', 'is_wizard', ]
+    ordering = ('-created',)
+    fields = ('name', 'css_class', 'parent', 'is_wizard')
 
 
 class FormAttributeAdmin(admin.ModelAdmin):
@@ -33,5 +41,5 @@ class FormAttributeAdmin(admin.ModelAdmin):
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
-admin.site.register(DynamicOptionSelects)
+admin.site.register(DynamicOptionSelects, DynamicOptionSelectsAdmin)
 admin.site.register(SimpleOptionSelects)
