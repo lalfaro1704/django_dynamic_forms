@@ -138,4 +138,4 @@ class FormAttribute(TimeStampedModel):
         verbose_name=_('attribute'))
 
     def __str__(self):
-        return "{}".format(self.value)
+        return "{}".format(self.dynamic_attribute)
