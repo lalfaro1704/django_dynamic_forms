@@ -27,6 +27,7 @@ class DynamicAttribute(TimeStampedModel):
         max_length=256)
 
     class Meta:
+        verbose_name = _('dynamic attribute')
         verbose_name_plural = _('dynamic attributes')
 
     def __str__(self):
@@ -42,6 +43,7 @@ class SimpleOptionSelects(TimeStampedModel):
         max_length=256)
 
     class Meta:
+        verbose_name = _('simple option select')
         verbose_name_plural = _('simple option select')
 
     def __str__(self):
@@ -64,6 +66,7 @@ class DynamicOptionSelects(TimeStampedModel):
         verbose_name=_('parent'))
 
     class Meta:
+        verbose_name = _('dynamic option select')
         verbose_name_plural = _('dynamic option select')
 
     def __str__(self):
@@ -99,6 +102,7 @@ class DynamicForm(TimeStampedModel):
         verbose_name=_('parent'))
 
     class Meta:
+        verbose_name = _('dynamic form')
         verbose_name_plural = _('dynamic forms')
 
     def __str__(self):
@@ -136,6 +140,10 @@ class FormAttribute(TimeStampedModel):
         DynamicAttribute,
         on_delete=models.CASCADE,
         verbose_name=_('attribute'))
+
+    class Meta:
+        verbose_name = _('form attribute')
+        verbose_name_plural = _('form attribute')
 
     def __str__(self):
         return "{}".format(self.dynamic_attribute)
