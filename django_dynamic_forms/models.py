@@ -41,6 +41,10 @@ class SimpleOptionSelects(TimeStampedModel):
     name = models.CharField(
         verbose_name=_('name'),
         max_length=256)
+    parent = models.ForeignKey(
+        'DynamicAttribute',
+        on_delete=models.CASCADE,
+        verbose_name=_('parent'))
 
     class Meta:
         verbose_name = _('simple option select')
@@ -48,29 +52,6 @@ class SimpleOptionSelects(TimeStampedModel):
 
     def __str__(self):
         return "{}".format(self.name)
-
-
-class DynamicOptionSelects(TimeStampedModel):
-    content_type = models.ForeignKey(
-        ContentType,
-        on_delete=models.DO_NOTHING
-    )
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey(
-        'content_type',
-        'object_id'
-    )
-    parent = models.ForeignKey(
-        'DynamicAttribute',
-        on_delete=models.CASCADE,
-        verbose_name=_('parent'))
-
-    class Meta:
-        verbose_name = _('dynamic option select')
-        verbose_name_plural = _('dynamic option select')
-
-    def __str__(self):
-        return "{}".format(self.content_object)
 
 
 class DynamicForm(TimeStampedModel):
