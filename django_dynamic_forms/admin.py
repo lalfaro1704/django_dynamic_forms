@@ -6,17 +6,12 @@ from .models import (DynamicForm, DynamicAttribute, FormAttribute,
                      SimpleOptionSelects)
 
 
-class DynamicOptionSelectsAdmin(admin.ModelAdmin):
-    icon = '<i class="material-icons">input</i>'
-
-
 class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
     search_fields = ('name', 'field_type', )
     list_display = ('name', 'field_type','created', )
     ordering = ('-created',)
     list_filter = ['created', 'field_type']
-    inlines = [DynamicOptionSelectsInlineAdmin]
 
 
 class DynamicFormAdmin(admin.ModelAdmin):
