@@ -3,15 +3,11 @@ from django.contrib import admin
 
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
-                     DynamicOptionSelects, SimpleOptionSelects)
+                     SimpleOptionSelects)
 
 
 class DynamicOptionSelectsAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
-
-
-class DynamicOptionSelectsInlineAdmin(admin.TabularInline):
-    model = DynamicOptionSelects
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
@@ -41,5 +37,4 @@ class FormAttributeAdmin(admin.ModelAdmin):
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
-admin.site.register(DynamicOptionSelects, DynamicOptionSelectsAdmin)
 admin.site.register(SimpleOptionSelects)
