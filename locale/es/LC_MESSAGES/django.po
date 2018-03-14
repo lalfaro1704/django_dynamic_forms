@@ -1,0 +1,63 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-14 16:18-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: django_dynamic_forms/apps.py:8
+msgid "Django Dynamic Forms"
+msgstr "formularios dinámicos"
+
+#: django_dynamic_forms/models.py:30
+msgid "dynamic attribute"
+msgstr "atributo dinámico"
+
+#: django_dynamic_forms/models.py:31
+msgid "dynamic attributes"
+msgstr "atributos dinámicos"
+
+#: django_dynamic_forms/models.py:50 django_dynamic_forms/models.py:51
+msgid "simple option select"
+msgstr "opciones de tipo select"
+
+#: django_dynamic_forms/models.py:62 django_dynamic_forms/models.py:109
+msgid "css class"
+msgstr "clase CSS"
+
+#: django_dynamic_forms/models.py:71
+msgid "is wizard?"
+msgstr "es menú superior?"
+
+#: django_dynamic_forms/models.py:76 django_dynamic_forms/models.py:123
+msgid "attribute"
+msgstr "atributo"
+
+#: django_dynamic_forms/models.py:86
+msgid "dynamic form"
+msgstr "formulario dinámico"
+
+#: django_dynamic_forms/models.py:87
+msgid "dynamic forms"
+msgstr "formularios dinámicos"
+
+#: django_dynamic_forms/models.py:119
+msgid "form"
+msgstr "formnulario"
+
+#: django_dynamic_forms/models.py:126 django_dynamic_forms/models.py:127
+msgid "form attribute"
+msgstr "atributo formulario"
