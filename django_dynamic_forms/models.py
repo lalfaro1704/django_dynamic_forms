@@ -9,12 +9,39 @@ from django.utils.translation import ugettext_lazy as _
 
 
 FIELD_TYPE = (
-    ('TXT', _('Text')),
-    ('TXB', _('Textarea')),
-    ('CHK', _('Checkbox')),
-    ('RDO', _('Radio')),
-    ('SLT', _('Select'))
+    ('input', _('input')),
+    ('textarea', _('textarea')),
+    ('checkbox', _('checkbox')),
+    ('radio', _('radio')),
+    ('select', _('select')),
+    ('div', _('div')),
+    ('label', _('label')),
+    ('button', _('button')),
+    ('i', _('i')),
+    ('p', _('p')),
+    ('h1', _('h1')),
+    ('h2', _('h2')),
+    ('h3', _('h3')),
+    ('h4', _('h4')),
+    ('h5', _('h5')),
+    ('h6', _('h6')),
 )
+
+
+class DynamicParameter(TimeStampedModel):
+    key  = models.CharField(
+        max_length=100,
+        verbose_name=_('key'))
+    value = models.CharField(
+        verbose_name=_('value'),
+        max_length=256)
+
+    class Meta:
+        verbose_name = _('dynamic parameter')
+        verbose_name_plural = _('dynamic parameters')
+
+    def __str__(self):
+        return "{}='{}'".format(self.key, self.value)
 
 
 class DynamicAttribute(TimeStampedModel):
@@ -25,7 +52,23 @@ class DynamicAttribute(TimeStampedModel):
     name = models.CharField(
         verbose_name=_('name'),
         max_length=256)
-
+    default_value = models.CharField(
+        verbose_name=_('default value'),
+        max_length=256,
+        null=True,
+        blank=True)
+    parent = models.ForeignKey(
+        'DynamicAttribute',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('parent'))
+    parameters = models.ManyToManyField(
+        DynamicParameter,
+        verbose_name=_('parameters')
+    )
+    order = models.IntegerField(
+        verbose_name=_('order'))
     class Meta:
         verbose_name = _('dynamic attribute')
         verbose_name_plural = _('dynamic attributes')
@@ -65,7 +108,37 @@ class DynamicForm(TimeStampedModel):
         null=True)
     code = models.CharField(
         verbose_name=_('code'),
+        blank=True,
+        null=True,
         max_length=256)
+    target = models.CharField(
+        verbose_name=_('target'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the target of the address in the action '
+                    'attribute (default: _self).'))
+    action = models.CharField(
+        verbose_name=_('action'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies an address (url) where to submit '
+                    'the form (default: the submitting page).'))
+    method = models.CharField(
+        verbose_name=_('method'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the HTTP method used when '
+                    'submitting the form (default: GET).'))
+    enctype = models.CharField(
+        verbose_name=_('enctype'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the encoding of the submitted data '
+                    '(default: is url-encoded).'))
     is_wizard = models.BooleanField(
         default=False,
         verbose_name=_('is wizard?'))
@@ -83,7 +156,7 @@ class DynamicForm(TimeStampedModel):
         verbose_name=_('parent'))
 
     class Meta:
-        verbose_name = _('dynamic form')
+        verbose_name = _('dynamic form,.')
         verbose_name_plural = _('dynamic forms')
 
     def __str__(self):
