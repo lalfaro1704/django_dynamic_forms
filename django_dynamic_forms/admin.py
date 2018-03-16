@@ -3,7 +3,7 @@ from django.contrib import admin
 
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
-                     SimpleOptionSelects)
+                     SimpleOptionSelects, DynamicParameter)
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
@@ -33,3 +33,4 @@ admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
 admin.site.register(SimpleOptionSelects)
+admin.site.register(DynamicParameter)
