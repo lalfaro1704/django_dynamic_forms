@@ -8,10 +8,10 @@ from .models import (DynamicForm, DynamicAttribute, FormAttribute,
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
-    search_fields = ('name', 'field_type', )
-    list_display = ('name', 'field_type','created', )
+    search_fields = ('name', 'element_type', )
+    list_display = ('name', 'element_type','created', )
     ordering = ('-created',)
-    list_filter = ['created', 'field_type']
+    filter_horizontal = ('parameters', )
 
 
 class DynamicFormAdmin(admin.ModelAdmin):

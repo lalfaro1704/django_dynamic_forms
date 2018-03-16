@@ -34,7 +34,9 @@ class DynamicParameter(TimeStampedModel):
         verbose_name=_('key'))
     value = models.CharField(
         verbose_name=_('value'),
-        max_length=256)
+        max_length=256,
+        null=True,
+        blank=True)
 
     class Meta:
         verbose_name = _('dynamic parameter')
@@ -45,12 +47,12 @@ class DynamicParameter(TimeStampedModel):
 
 
 class DynamicAttribute(TimeStampedModel):
-    field_type  = models.CharField(
+    element_type  = models.CharField(
         max_length=100,
-        verbose_name=_('field types'),
+        verbose_name=_('element type'),
         choices=FIELD_TYPE)
-    name = models.CharField(
-        verbose_name=_('name'),
+    id_element = models.CharField(
+        verbose_name=_('id'),
         max_length=256)
     default_value = models.CharField(
         verbose_name=_('default value'),
@@ -74,7 +76,7 @@ class DynamicAttribute(TimeStampedModel):
         verbose_name_plural = _('dynamic attributes')
 
     def __str__(self):
-        return "{} {}".format(self.name, self.field_type)
+        return "{} {}".format(self.id_element, self.element_type)
 
 
 class SimpleOptionSelects(TimeStampedModel):
