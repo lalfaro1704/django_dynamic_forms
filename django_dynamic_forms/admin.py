@@ -21,7 +21,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
     list_filter = ['created', 'is_wizard', ]
     ordering = ('-created',)
     fields = ('name', 'css_class', 'action', 'method',
-              'enctype', 'parent', 'is_wizard')
+              'enctype', 'parent', 'order', 'is_wizard')
 
 
 class FormAttributeAdmin(admin.ModelAdmin):
