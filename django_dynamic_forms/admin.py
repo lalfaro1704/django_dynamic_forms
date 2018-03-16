@@ -8,8 +8,8 @@ from .models import (DynamicForm, DynamicAttribute, FormAttribute,
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
-    search_fields = ('name', 'element_type', )
-    list_display = ('name', 'element_type','created', )
+    search_fields = ('id_element', 'element_type', )
+    list_display = ('id_element', 'element_type','created', )
     ordering = ('-created',)
     filter_horizontal = ('parameters', )
 
