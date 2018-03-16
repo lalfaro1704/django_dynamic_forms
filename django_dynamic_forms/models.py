@@ -156,6 +156,8 @@ class DynamicForm(TimeStampedModel):
         null=True,
         on_delete=models.CASCADE,
         verbose_name=_('parent'))
+    order = models.IntegerField(
+        verbose_name=_('order'))
 
     class Meta:
         verbose_name = _('dynamic form,.')
