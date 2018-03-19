@@ -160,7 +160,7 @@ class DynamicForm(TimeStampedModel):
         verbose_name=_('order'))
 
     class Meta:
-        verbose_name = _('dynamic form,.')
+        verbose_name = _('dynamic form')
         verbose_name_plural = _('dynamic forms')
 
     def __str__(self):
