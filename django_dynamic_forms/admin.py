@@ -26,7 +26,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
 
 class FormAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('dynamic_form', 'dynamic_attribute', 'css_class', )
+    list_display = ('dynamic_form', 'dynamic_attribute', )
     list_filter = ['dynamic_form']
 
 
