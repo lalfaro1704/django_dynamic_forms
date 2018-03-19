@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-14 16:18-0500\n"
+"POT-Creation-Date: 2018-03-19 17:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,44 +20,203 @@ msgstr ""
 
 #: django_dynamic_forms/apps.py:8
 msgid "Django Dynamic Forms"
-msgstr "formularios dinámicos"
+msgstr "Formularios Dinámicos"
 
-#: django_dynamic_forms/models.py:30
+#: django_dynamic_forms/models.py:12
+msgid "input"
+msgstr ""
+
+#: django_dynamic_forms/models.py:13
+msgid "textarea"
+msgstr ""
+
+#: django_dynamic_forms/models.py:14
+msgid "checkbox"
+msgstr ""
+
+#: django_dynamic_forms/models.py:15
+msgid "radio"
+msgstr ""
+
+#: django_dynamic_forms/models.py:16
+msgid "select"
+msgstr ""
+
+#: django_dynamic_forms/models.py:17
+msgid "div"
+msgstr ""
+
+#: django_dynamic_forms/models.py:18
+msgid "label"
+msgstr ""
+
+#: django_dynamic_forms/models.py:19
+msgid "button"
+msgstr ""
+
+#: django_dynamic_forms/models.py:20
+msgid "i"
+msgstr ""
+
+#: django_dynamic_forms/models.py:21
+msgid "p"
+msgstr ""
+
+#: django_dynamic_forms/models.py:22
+msgid "h1"
+msgstr ""
+
+#: django_dynamic_forms/models.py:23
+msgid "h2"
+msgstr ""
+
+#: django_dynamic_forms/models.py:24
+msgid "h3"
+msgstr ""
+
+#: django_dynamic_forms/models.py:25
+msgid "h4"
+msgstr ""
+
+#: django_dynamic_forms/models.py:26
+msgid "h5"
+msgstr ""
+
+#: django_dynamic_forms/models.py:27
+msgid "h6"
+msgstr ""
+
+#: django_dynamic_forms/models.py:34
+msgid "key"
+msgstr ""
+
+#: django_dynamic_forms/models.py:36
+msgid "value"
+msgstr ""
+
+#: django_dynamic_forms/models.py:42
+#, fuzzy
+#| msgid "dynamic attribute"
+msgid "dynamic parameter"
+msgstr "atributo dinámico"
+
+#: django_dynamic_forms/models.py:43
+#, fuzzy
+#| msgid "dynamic attributes"
+msgid "dynamic parameters"
+msgstr "atributos dinámicos"
+
+#: django_dynamic_forms/models.py:52
+msgid "element type"
+msgstr ""
+
+#: django_dynamic_forms/models.py:55
+msgid "id"
+msgstr ""
+
+#: django_dynamic_forms/models.py:58
+msgid "default value"
+msgstr ""
+
+#: django_dynamic_forms/models.py:67 django_dynamic_forms/models.py:92
+#: django_dynamic_forms/models.py:158
+msgid "parent"
+msgstr ""
+
+#: django_dynamic_forms/models.py:70
+msgid "parameters"
+msgstr ""
+
+#: django_dynamic_forms/models.py:73 django_dynamic_forms/models.py:160
+#: django_dynamic_forms/models.py:183
+msgid "order"
+msgstr ""
+
+#: django_dynamic_forms/models.py:75
 msgid "dynamic attribute"
 msgstr "atributo dinámico"
 
-#: django_dynamic_forms/models.py:31
+#: django_dynamic_forms/models.py:76
 msgid "dynamic attributes"
 msgstr "atributos dinámicos"
 
-#: django_dynamic_forms/models.py:50 django_dynamic_forms/models.py:51
+#: django_dynamic_forms/models.py:85 django_dynamic_forms/models.py:112
+msgid "code"
+msgstr ""
+
+#: django_dynamic_forms/models.py:87 django_dynamic_forms/models.py:104
+msgid "name"
+msgstr ""
+
+#: django_dynamic_forms/models.py:95 django_dynamic_forms/models.py:96
 msgid "simple option select"
 msgstr "opciones de tipo select"
 
-#: django_dynamic_forms/models.py:62 django_dynamic_forms/models.py:109
+#: django_dynamic_forms/models.py:107
 msgid "css class"
 msgstr "clase CSS"
 
-#: django_dynamic_forms/models.py:71
+#: django_dynamic_forms/models.py:117
+msgid "target"
+msgstr ""
+
+#: django_dynamic_forms/models.py:121
+msgid ""
+"Specifies the target of the address in the action attribute (default: _self)."
+msgstr ""
+
+#: django_dynamic_forms/models.py:124
+msgid "action"
+msgstr ""
+
+#: django_dynamic_forms/models.py:128
+msgid ""
+"Specifies an address (url) where to submit the form (default: the submitting "
+"page)."
+msgstr ""
+
+#: django_dynamic_forms/models.py:131
+msgid "method"
+msgstr ""
+
+#: django_dynamic_forms/models.py:135
+msgid "Specifies the HTTP method used when submitting the form (default: GET)."
+msgstr ""
+
+#: django_dynamic_forms/models.py:138
+msgid "enctype"
+msgstr ""
+
+#: django_dynamic_forms/models.py:142
+msgid "Specifies the encoding of the submitted data (default: is url-encoded)."
+msgstr ""
+
+#: django_dynamic_forms/models.py:146
 msgid "is wizard?"
 msgstr "es menú superior?"
 
-#: django_dynamic_forms/models.py:76 django_dynamic_forms/models.py:123
+#: django_dynamic_forms/models.py:151 django_dynamic_forms/models.py:181
 msgid "attribute"
 msgstr "atributo"
 
-#: django_dynamic_forms/models.py:86
-msgid "dynamic form"
+#: django_dynamic_forms/models.py:163
+#, fuzzy
+#| msgid "dynamic form"
+msgid "dynamic form,."
 msgstr "formulario dinámico"
 
-#: django_dynamic_forms/models.py:87
+#: django_dynamic_forms/models.py:164
 msgid "dynamic forms"
 msgstr "formularios dinámicos"
 
-#: django_dynamic_forms/models.py:119
+#: django_dynamic_forms/models.py:173
+msgid "is required?"
+msgstr ""
+
+#: django_dynamic_forms/models.py:177
 msgid "form"
 msgstr "formnulario"
 
-#: django_dynamic_forms/models.py:126 django_dynamic_forms/models.py:127
+#: django_dynamic_forms/models.py:186 django_dynamic_forms/models.py:187
 msgid "form attribute"
 msgstr "atributo formulario"

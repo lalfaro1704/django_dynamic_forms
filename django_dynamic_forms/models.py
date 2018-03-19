@@ -166,20 +166,6 @@ class DynamicForm(TimeStampedModel):
     def __str__(self):
         return "{}".format(self.name)
 
-    def elimina_tildes(self, name):
-        normalize = unicodedata.normalize('NFD',str(name))
-        s = ''.join((c for c in normalize if unicodedata.category(c) != 'Mn'))
-        return s
-
-    def form_code(self, name):
-        code = name.lower().replace(" ", "_")
-        code = self.elimina_tildes(code)
-        return code
-
-    def save(self, *args, **kwargs):
-        self.code = self.form_code(self.name)
-        super(DynamicForm, self).save(*args, **kwargs)
-
 
 class FormAttribute(TimeStampedModel):
     is_required = models.BooleanField(
