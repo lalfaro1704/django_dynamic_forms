@@ -31,7 +31,10 @@ class FormAttributeAdmin(admin.ModelAdmin):
 
 
 class SimpleOptionSelectsAdmin(admin.ModelAdmin):
-    
+    list_display = ('name', 'parent', 'created', )
+    list_filter = ['-created', ]
+    search_fields = ('name', 'parent__id_element')
+
     def get_form(self, request, obj=None, **kwargs):
         form = super(SimpleOptionSelectsAdmin, self).get_form(request, obj, **kwargs)
         form.base_fields['parent'].queryset = DynamicAttribute.objects.filter(element_type='select')
