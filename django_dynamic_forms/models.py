@@ -182,11 +182,6 @@ class DynamicForm(TimeStampedModel):
 
 
 class FormAttribute(TimeStampedModel):
-    css_class = models.CharField(
-        verbose_name=_('css class'),
-        max_length=256,
-        blank=True,
-        null=True)
     is_required = models.BooleanField(
         default=False,
         verbose_name=_('is required?'))
@@ -198,6 +193,8 @@ class FormAttribute(TimeStampedModel):
         DynamicAttribute,
         on_delete=models.CASCADE,
         verbose_name=_('attribute'))
+    order = models.IntegerField(
+        verbose_name=_('order'))
 
     class Meta:
         verbose_name = _('form attribute')
