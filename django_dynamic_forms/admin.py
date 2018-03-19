@@ -30,8 +30,16 @@ class FormAttributeAdmin(admin.ModelAdmin):
     list_filter = ['dynamic_form']
 
 
+class SimpleOptionSelectsAdmin(admin.ModelAdmin):
+    
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(SimpleOptionSelectsAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['parent'].queryset = DynamicAttribute.objects.filter(element_type='select')
+        return form
+
+
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
-admin.site.register(SimpleOptionSelects)
+admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
 admin.site.register(DynamicParameter)
