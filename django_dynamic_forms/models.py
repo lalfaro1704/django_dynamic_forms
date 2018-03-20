@@ -43,7 +43,7 @@ class DynamicParameter(TimeStampedModel):
         verbose_name_plural = _('dynamic parameters')
 
     def __str__(self):
-        return "{}='{}'".format(self.key, self.value)
+        return '{}="{}"'.format(self.key, self.value)
 
 
 class DynamicAttribute(TimeStampedModel):
@@ -53,7 +53,8 @@ class DynamicAttribute(TimeStampedModel):
         choices=FIELD_TYPE)
     id_element = models.CharField(
         verbose_name=_('id'),
-        max_length=256)
+        max_length=256,
+        help_text=_('Value for HTML attribute (id="example").'))
     default_value = models.CharField(
         verbose_name=_('default value'),
         max_length=256,
