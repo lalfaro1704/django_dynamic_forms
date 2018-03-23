@@ -69,7 +69,6 @@ class ListName(models.Model):
 class ListOptionSelect(models.Model):
     list_name = models.ManyToManyField(
         'ListName',
-        on_delete=models.CASCADE,
         verbose_name=_('lists name'))
     name = models.CharField(
         verbose_name=_('name'),
