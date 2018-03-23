@@ -3,6 +3,7 @@ import unicodedata
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from django.utils.translation import ugettext_lazy as _
@@ -46,6 +47,46 @@ class DynamicParameter(TimeStampedModel):
         return '{}="{}"'.format(self.key, self.value)
 
 
+class ListName(models.Model):
+    name  = models.CharField(
+        max_length=100,
+        verbose_name=_('key'))
+    select_list = models.ForeignKey(
+        'DynamicAttribute',
+        on_delete=models.CASCADE,
+        verbose_name=_('select list'),
+        null=True,
+        blank=True)
+
+    class Meta:
+        verbose_name = _('list name')
+        verbose_name_plural = _('list names')
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+
+class ListOptionSelect(models.Model):
+    list_name = models.ManyToManyField(
+        'ListName',
+        on_delete=models.CASCADE,
+        verbose_name=_('lists name'))
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=256)
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_('groups'),
+    )
+
+    class Meta:
+        verbose_name = _('list option select')
+        verbose_name_plural = _('lists option select')
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
 class DynamicAttribute(TimeStampedModel):
     element_type  = models.CharField(
         max_length=100,
@@ -72,6 +113,7 @@ class DynamicAttribute(TimeStampedModel):
     )
     order = models.IntegerField(
         verbose_name=_('order'))
+
     class Meta:
         verbose_name = _('dynamic attribute')
         verbose_name_plural = _('dynamic attributes')

@@ -3,7 +3,8 @@ from django.contrib import admin
 
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
-                     SimpleOptionSelects, DynamicParameter)
+                     SimpleOptionSelects, DynamicParameter, ListName,
+                     ListOptionSelect)
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
@@ -42,8 +43,20 @@ class SimpleOptionSelectsAdmin(admin.ModelAdmin):
         return form
 
 
+class ListNameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'select_list', )
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ListNameAdmin, self).get_form(request, obj, **kwargs)
+        queryset = DynamicAttribute.objects.filter(element_type='select')
+        form.base_fields['select_list'].queryset = queryset.exclude(simpleoptionselects__in=queryset)
+        return form
+
+
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
 admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
 admin.site.register(DynamicParameter)
+admin.site.register(ListName, ListNameAdmin)
+admin.site.register(ListOptionSelect)
