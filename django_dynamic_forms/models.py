@@ -49,8 +49,8 @@ class DynamicParameter(TimeStampedModel):
 
 class ListName(models.Model):
     name  = models.CharField(
-        max_length=100,
-        verbose_name=_('key'))
+        max_length=256,
+        verbose_name=_('name'))
     select_list = models.ForeignKey(
         'DynamicAttribute',
         on_delete=models.CASCADE,
@@ -67,12 +67,12 @@ class ListName(models.Model):
 
 
 class ListOptionSelect(models.Model):
-    list_name = models.ManyToManyField(
-        'ListName',
-        verbose_name=_('lists name'))
     name = models.CharField(
         verbose_name=_('name'),
         max_length=256)
+    list_name = models.ManyToManyField(
+        'ListName',
+        verbose_name=_('lists name'))
     groups = models.ManyToManyField(
         Group,
         verbose_name=_('groups'),

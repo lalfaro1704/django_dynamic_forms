@@ -39,7 +39,9 @@ class SimpleOptionSelectsAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(SimpleOptionSelectsAdmin, self).get_form(request, obj, **kwargs)
-        form.base_fields['parent'].queryset = DynamicAttribute.objects.filter(element_type='select')
+        listname = ListName.objects.all()
+        queryset = DynamicAttribute.objects.filter(element_type='select')
+        form.base_fields['parent'].queryset = queryset.exclude(listname__in=listname)
         return form
 
 
@@ -48,8 +50,9 @@ class ListNameAdmin(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(ListNameAdmin, self).get_form(request, obj, **kwargs)
+        simple = SimpleOptionSelects.objects.all()
         queryset = DynamicAttribute.objects.filter(element_type='select')
-        form.base_fields['select_list'].queryset = queryset.exclude(simpleoptionselects__in=queryset)
+        form.base_fields['select_list'].queryset = queryset.exclude(simpleoptionselects__in=simple)
         return form
 
 
