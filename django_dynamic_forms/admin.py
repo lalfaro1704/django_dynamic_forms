@@ -11,6 +11,7 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">input</i>'
     search_fields = ('id_element', 'element_type', )
     list_display = ('id_element', 'element_type','created', )
+    list_per_page = 15
     ordering = ('-created',)
     filter_horizontal = ('parameters', )
 
@@ -20,6 +21,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent', 'code', 'is_wizard', 'created')
     search_fields = ('name', 'parent__name', 'code')
     list_filter = ['created', 'is_wizard', ]
+    list_per_page = 15
     ordering = ('-created',)
     fields = ('name', 'css_class', 'action', 'method',
               'enctype', 'parent', 'order', 'is_wizard')
@@ -29,11 +31,13 @@ class FormAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">reorder</i>'
     list_display = ('dynamic_form', 'dynamic_attribute', )
     list_filter = ['dynamic_form']
+    list_per_page = 15
 
 
 class SimpleOptionSelectsAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent', 'created', )
     list_filter = ['created', ]
+    list_per_page = 15
     ordering = ('-created', )
     search_fields = ('name', 'parent__id_element')
 
@@ -47,6 +51,8 @@ class SimpleOptionSelectsAdmin(admin.ModelAdmin):
 
 class ListNameAdmin(admin.ModelAdmin):
     list_display = ('name', 'select_list', )
+    search_fields = ('name', 'select_list__id_element', )
+    list_per_page = 15
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(ListNameAdmin, self).get_form(request, obj, **kwargs)
@@ -56,10 +62,17 @@ class ListNameAdmin(admin.ModelAdmin):
         return form
 
 
+class ListOptionSelectAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    list_per_page = 15
+    search_fields = ('name', )
+    filter_horizontal = ('list_name', 'groups', )
+
+
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
 admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
 admin.site.register(DynamicParameter)
 admin.site.register(ListName, ListNameAdmin)
-admin.site.register(ListOptionSelect)
+admin.site.register(ListOptionSelect, ListOptionSelectAdmin)

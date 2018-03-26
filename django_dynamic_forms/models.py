@@ -1,232 +1,86 @@
-# -*- coding: utf-8 -*-
-import unicodedata
-from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import Group
+# Core Django imports
+from django.contrib import admin
 
-from model_utils.models import TimeStampedModel, SoftDeletableModel
-from django.utils.translation import ugettext_lazy as _
+# Imports from project
+from .models import (DynamicForm, DynamicAttribute, FormAttribute,
+                     SimpleOptionSelects, DynamicParameter, ListName,
+                     ListOptionSelect)
 
 
-FIELD_TYPE = (
-    ('input', _('input')),
-    ('textarea', _('textarea')),
-    ('checkbox', _('checkbox')),
-    ('radio', _('radio')),
-    ('select', _('select')),
-    ('div', _('div')),
-    ('label', _('label')),
-    ('button', _('button')),
-    ('i', _('i')),
-    ('p', _('p')),
-    ('h1', _('h1')),
-    ('h2', _('h2')),
-    ('h3', _('h3')),
-    ('h4', _('h4')),
-    ('h5', _('h5')),
-    ('h6', _('h6')),
-)
+class DynamicAttributeAdmin(admin.ModelAdmin):
+    icon = '<i class="material-icons">input</i>'
+    search_fields = ('id_element', 'element_type', )
+    list_display = ('id_element', 'element_type','created', )
+    list_per_page = 15
+    ordering = ('created',)
+    filter_horizontal = ('parameters', )
 
 
-class DynamicParameter(TimeStampedModel):
-    key  = models.CharField(
-        max_length=100,
-        verbose_name=_('key'))
-    value = models.CharField(
-        verbose_name=_('value'),
-        max_length=256,
-        null=True,
-        blank=True)
-
-    class Meta:
-        verbose_name = _('dynamic parameter')
-        verbose_name_plural = _('dynamic parameters')
-
-    def __str__(self):
-        return '{}="{}"'.format(self.key, self.value)
+class DynamicFormAdmin(admin.ModelAdmin):
+    icon = '<i class="material-icons">reorder</i>'
+    list_display = ('name', 'parent', 'code', 'is_wizard', 'created')
+    search_fields = ('name', 'parent__name', 'code')
+    list_filter = ['created', 'is_wizard', ]
+    list_per_page = 15
+    ordering = ('created',)
+    fields = ('name', 'css_class', 'action', 'method',
+              'enctype', 'parent', 'order', 'is_wizard')
 
 
-class ListName(models.Model):
-    name  = models.CharField(
-        max_length=256,
-        verbose_name=_('name'))
-    select_list = models.ForeignKey(
-        'DynamicAttribute',
-        on_delete=models.CASCADE,
-        verbose_name=_('select list'),
-        null=True,
-        blank=True)
-
-    class Meta:
-        verbose_name = _('list name')
-        verbose_name_plural = _('list names')
-
-    def __str__(self):
-        return '{}'.format(self.name)
+class FormAttributeAdmin(admin.ModelAdmin):
+    icon = '<i class="material-icons">reorder</i>'
+    list_display = ('dynamic_form', 'dynamic_attribute', )
+    list_filter = ['dynamic_form']
+    list_per_page = 15
 
 
-class ListOptionSelect(models.Model):
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=256)
-    list_name = models.ManyToManyField(
-        'ListName',
-        verbose_name=_('lists name'))
-    groups = models.ManyToManyField(
-        Group,
-        verbose_name=_('groups'),
-    )
+class SimpleOptionSelectsAdmin(admin.ModelAdmin):
+    list_display = ('name', 'parent', 'created', )
+    list_filter = ['created', ]
+    list_per_page = 15
+    ordering = ('created', )
+    search_fields = ('name', 'parent__id_element')
 
-    class Meta:
-        verbose_name = _('list option select')
-        verbose_name_plural = _('lists option select')
-
-    def __str__(self):
-        return "{}".format(self.name)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(SimpleOptionSelectsAdmin, self).get_form(request, obj, **kwargs)
+        listname = ListName.objects.all()
+        queryset = DynamicAttribute.objects.filter(element_type='select')
+        form.base_fields['parent'].queryset = queryset.exclude(listname__in=listname)
+        return form
 
 
-class DynamicAttribute(TimeStampedModel):
-    element_type  = models.CharField(
-        max_length=100,
-        verbose_name=_('element type'),
-        choices=FIELD_TYPE)
-    id_element = models.CharField(
-        verbose_name=_('id'),
-        max_length=256,
-        help_text=_('Value for HTML attribute (id="example").'))
-    default_value = models.CharField(
-        verbose_name=_('default value'),
-        max_length=256,
-        null=True,
-        blank=True)
-    parent = models.ForeignKey(
-        'DynamicAttribute',
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        verbose_name=_('parent'))
-    parameters = models.ManyToManyField(
-        DynamicParameter,
-        verbose_name=_('parameters')
-    )
-    order = models.IntegerField(
-        verbose_name=_('order'))
+class ListNameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'select_list', )
+    search_fields = ('name', 'select_list__id_element', )
+    list_per_page = 15
 
-    class Meta:
-        verbose_name = _('dynamic attribute')
-        verbose_name_plural = _('dynamic attributes')
-
-    def __str__(self):
-        return "{} {}".format(self.id_element, self.element_type)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(ListNameAdmin, self).get_form(request, obj, **kwargs)
+        simple = SimpleOptionSelects.objects.all()
+        queryset = DynamicAttribute.objects.filter(element_type='select')
+        form.base_fields['select_list'].queryset = queryset.exclude(simpleoptionselects__in=simple)
+        return form
 
 
-class SimpleOptionSelects(TimeStampedModel):
-    code  = models.CharField(
-        max_length=100,
-        verbose_name=_('code'))
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=256)
-    parent = models.ForeignKey(
-        'DynamicAttribute',
-        on_delete=models.CASCADE,
-        verbose_name=_('parent'))
-
-    class Meta:
-        verbose_name = _('simple option select')
-        verbose_name_plural = _('simple option select')
-
-    def __str__(self):
-        return "{}".format(self.name)
+class ListOptionSelectAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+    list_per_page = 15
+    search_fields = ('name', )
+    filter_horizontal = ('list_name', 'groups', )
 
 
-class DynamicForm(TimeStampedModel):
-    name = models.CharField(
-        verbose_name=_('name'),
-        max_length=256)
-    css_class = models.CharField(
-        verbose_name=_('css class'),
-        max_length=256,
-        blank=True,
-        null=True)
-    code = models.CharField(
-        verbose_name=_('code'),
-        blank=True,
-        null=True,
-        max_length=256)
-    target = models.CharField(
-        verbose_name=_('target'),
-        blank=True,
-        null=True,
-        max_length=256,
-        help_text=_('Specifies the target of the address in the action '
-                    'attribute (default: _self).'))
-    action = models.CharField(
-        verbose_name=_('action'),
-        blank=True,
-        null=True,
-        max_length=256,
-        help_text=_('Specifies an address (url) where to submit '
-                    'the form (default: the submitting page).'))
-    method = models.CharField(
-        verbose_name=_('method'),
-        blank=True,
-        null=True,
-        max_length=256,
-        help_text=_('Specifies the HTTP method used when '
-                    'submitting the form (default: GET).'))
-    enctype = models.CharField(
-        verbose_name=_('enctype'),
-        blank=True,
-        null=True,
-        max_length=256,
-        help_text=_('Specifies the encoding of the submitted data '
-                    '(default: is url-encoded).'))
-    is_wizard = models.BooleanField(
-        default=False,
-        verbose_name=_('is wizard?'))
-    attribute = models.ManyToManyField(
-        DynamicAttribute,
-        through='FormAttribute',
-        through_fields=('dynamic_form', 'dynamic_attribute'),
-        verbose_name=_('attribute')
-    )
-    parent = models.ForeignKey(
-        'DynamicForm',
-        blank=True,
-        null=True,
-        on_delete=models.CASCADE,
-        verbose_name=_('parent'))
-    order = models.IntegerField(
-        verbose_name=_('order'))
-
-    class Meta:
-        verbose_name = _('dynamic form')
-        verbose_name_plural = _('dynamic forms')
-
-    def __str__(self):
-        return "{}".format(self.name)
+class DynamicParameterAdmin(admin.ModelAdmin):
+    list_display = ('key', 'value', 'created')
+    list_filter = ['created', ]
+    ordering = ('created', )
+    list_per_page = 15
+    search_fields = ('name', 'value')
 
 
-class FormAttribute(TimeStampedModel):
-    is_required = models.BooleanField(
-        default=False,
-        verbose_name=_('is required?'))
-    dynamic_form = models.ForeignKey(
-        DynamicForm,
-        on_delete=models.CASCADE,
-        verbose_name=_('form'))
-    dynamic_attribute = models.ForeignKey(
-        DynamicAttribute,
-        on_delete=models.CASCADE,
-        verbose_name=_('attribute'))
-    order = models.IntegerField(
-        verbose_name=_('order'))
-
-    class Meta:
-        verbose_name = _('form attribute')
-        verbose_name_plural = _('form attribute')
-
-    def __str__(self):
-        return "{}".format(self.dynamic_attribute)
+admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
+admin.site.register(DynamicForm, DynamicFormAdmin)
+admin.site.register(FormAttribute, FormAttributeAdmin)
+admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
+admin.site.register(DynamicParameter, DynamicParameterAdmin)
+admin.site.register(ListName, ListNameAdmin)
+admin.site.register(ListOptionSelect, ListOptionSelectAdmin)
