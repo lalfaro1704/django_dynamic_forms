@@ -12,7 +12,7 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
     search_fields = ('id_element', 'element_type', )
     list_display = ('id_element', 'element_type','created', )
     list_per_page = 15
-    ordering = ('-created',)
+    ordering = ('created',)
     filter_horizontal = ('parameters', )
 
 
@@ -22,7 +22,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
     search_fields = ('name', 'parent__name', 'code')
     list_filter = ['created', 'is_wizard', ]
     list_per_page = 15
-    ordering = ('-created',)
+    ordering = ('created',)
     fields = ('name', 'css_class', 'action', 'method',
               'enctype', 'parent', 'order', 'is_wizard')
 
@@ -38,7 +38,7 @@ class SimpleOptionSelectsAdmin(admin.ModelAdmin):
     list_display = ('name', 'parent', 'created', )
     list_filter = ['created', ]
     list_per_page = 15
-    ordering = ('-created', )
+    ordering = ('created', )
     search_fields = ('name', 'parent__id_element')
 
     def get_form(self, request, obj=None, **kwargs):
@@ -69,10 +69,18 @@ class ListOptionSelectAdmin(admin.ModelAdmin):
     filter_horizontal = ('list_name', 'groups', )
 
 
+class DynamicParameterAdmin(admin.ModelAdmin):
+    list_display = ('key', 'value', 'created')
+    list_filter = ['created', ]
+    ordering = ('created', )
+    list_per_page = 15
+    search_fields = ('name', 'value')
+
+
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
 admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
-admin.site.register(DynamicParameter)
+admin.site.register(DynamicParameter, DynamicParameterAdmin)
 admin.site.register(ListName, ListNameAdmin)
 admin.site.register(ListOptionSelect, ListOptionSelectAdmin)
