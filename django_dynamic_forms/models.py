@@ -3,34 +3,125 @@ import unicodedata
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import Group
 
 from model_utils.models import TimeStampedModel, SoftDeletableModel
 from django.utils.translation import ugettext_lazy as _
 
 
 FIELD_TYPE = (
-    ('TXT', _('Text')),
-    ('TXB', _('Textarea')),
-    ('CHK', _('Checkbox')),
-    ('RDO', _('Radio')),
-    ('SLT', _('Select'))
+    ('input', _('input')),
+    ('textarea', _('textarea')),
+    ('checkbox', _('checkbox')),
+    ('radio', _('radio')),
+    ('select', _('select')),
+    ('div', _('div')),
+    ('label', _('label')),
+    ('button', _('button')),
+    ('i', _('i')),
+    ('p', _('p')),
+    ('h1', _('h1')),
+    ('h2', _('h2')),
+    ('h3', _('h3')),
+    ('h4', _('h4')),
+    ('h5', _('h5')),
+    ('h6', _('h6')),
 )
 
 
-class DynamicAttribute(TimeStampedModel):
-    field_type  = models.CharField(
+class DynamicParameter(TimeStampedModel):
+    key  = models.CharField(
         max_length=100,
-        verbose_name=_('field types'),
-        choices=FIELD_TYPE)
+        verbose_name=_('key'))
+    value = models.CharField(
+        verbose_name=_('value'),
+        max_length=256,
+        null=True,
+        blank=True)
+
+    class Meta:
+        verbose_name = _('dynamic parameter')
+        verbose_name_plural = _('dynamic parameters')
+
+    def __str__(self):
+        output = '{}'.format(self.key)
+        if self.value:
+            output = '{}="{}"'.format(self.key, self.value)
+        return output
+
+
+class ListName(models.Model):
+    name  = models.CharField(
+        max_length=256,
+        verbose_name=_('name'))
+    select_list = models.ForeignKey(
+        'DynamicAttribute',
+        on_delete=models.CASCADE,
+        verbose_name=_('select list'),
+        null=True,
+        blank=True)
+
+    class Meta:
+        verbose_name = _('list name')
+        verbose_name_plural = _('list names')
+
+    def __str__(self):
+        return '{}'.format(self.name)
+
+
+class ListOptionSelect(models.Model):
     name = models.CharField(
         verbose_name=_('name'),
         max_length=256)
+    list_name = models.ManyToManyField(
+        'ListName',
+        verbose_name=_('lists name'))
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_('groups'),
+    )
 
     class Meta:
+        verbose_name = _('list option select')
+        verbose_name_plural = _('lists option select')
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+class DynamicAttribute(TimeStampedModel):
+    element_type  = models.CharField(
+        max_length=100,
+        verbose_name=_('element type'),
+        choices=FIELD_TYPE)
+    id_element = models.CharField(
+        verbose_name=_('id'),
+        max_length=256,
+        help_text=_('Value for HTML attribute (id="example").'))
+    default_value = models.CharField(
+        verbose_name=_('default value'),
+        max_length=256,
+        null=True,
+        blank=True)
+    parent = models.ForeignKey(
+        'DynamicAttribute',
+        blank=True,
+        null=True,
+        on_delete=models.CASCADE,
+        verbose_name=_('parent'))
+    parameters = models.ManyToManyField(
+        DynamicParameter,
+        verbose_name=_('parameters')
+    )
+    order = models.IntegerField(
+        verbose_name=_('order'))
+
+    class Meta:
+        verbose_name = _('dynamic attribute')
         verbose_name_plural = _('dynamic attributes')
 
     def __str__(self):
-        return "{} {}".format(self.name, self.field_type)
+        return "{} {}".format(self.id_element, self.element_type)
 
 
 class SimpleOptionSelects(TimeStampedModel):
@@ -40,34 +131,17 @@ class SimpleOptionSelects(TimeStampedModel):
     name = models.CharField(
         verbose_name=_('name'),
         max_length=256)
-
-    class Meta:
-        verbose_name_plural = _('simple option select')
-
-    def __str__(self):
-        return "{}".format(self.name)
-
-
-class DynamicOptionSelects(TimeStampedModel):
-    content_type = models.ForeignKey(
-        ContentType,
-        on_delete=models.DO_NOTHING
-    )
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey(
-        'content_type',
-        'object_id'
-    )
     parent = models.ForeignKey(
         'DynamicAttribute',
         on_delete=models.CASCADE,
         verbose_name=_('parent'))
 
     class Meta:
-        verbose_name_plural = _('dynamic option select')
+        verbose_name = _('simple option select')
+        verbose_name_plural = _('simple option select')
 
     def __str__(self):
-        return "{}".format(self.content_object)
+        return "{}".format(self.name)
 
 
 class DynamicForm(TimeStampedModel):
@@ -81,7 +155,37 @@ class DynamicForm(TimeStampedModel):
         null=True)
     code = models.CharField(
         verbose_name=_('code'),
+        blank=True,
+        null=True,
         max_length=256)
+    target = models.CharField(
+        verbose_name=_('target'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the target of the address in the action '
+                    'attribute (default: _self).'))
+    action = models.CharField(
+        verbose_name=_('action'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies an address (url) where to submit '
+                    'the form (default: the submitting page).'))
+    method = models.CharField(
+        verbose_name=_('method'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the HTTP method used when '
+                    'submitting the form (default: GET).'))
+    enctype = models.CharField(
+        verbose_name=_('enctype'),
+        blank=True,
+        null=True,
+        max_length=256,
+        help_text=_('Specifies the encoding of the submitted data '
+                    '(default: is url-encoded).'))
     is_wizard = models.BooleanField(
         default=False,
         verbose_name=_('is wizard?'))
@@ -97,34 +201,18 @@ class DynamicForm(TimeStampedModel):
         null=True,
         on_delete=models.CASCADE,
         verbose_name=_('parent'))
+    order = models.IntegerField(
+        verbose_name=_('order'))
 
     class Meta:
+        verbose_name = _('dynamic form')
         verbose_name_plural = _('dynamic forms')
 
     def __str__(self):
         return "{}".format(self.name)
 
-    def elimina_tildes(self, name):
-        normalize = unicodedata.normalize('NFD',str(name))
-        s = ''.join((c for c in normalize if unicodedata.category(c) != 'Mn'))
-        return s
-
-    def form_code(self, name):
-        code = name.lower().replace(" ", "_")
-        code = self.elimina_tildes(code)
-        return code
-
-    def save(self, *args, **kwargs):
-        self.code = self.form_code(self.name)
-        super(DynamicForm, self).save(*args, **kwargs)
-
 
 class FormAttribute(TimeStampedModel):
-    css_class = models.CharField(
-        verbose_name=_('css class'),
-        max_length=256,
-        blank=True,
-        null=True)
     is_required = models.BooleanField(
         default=False,
         verbose_name=_('is required?'))
@@ -136,6 +224,12 @@ class FormAttribute(TimeStampedModel):
         DynamicAttribute,
         on_delete=models.CASCADE,
         verbose_name=_('attribute'))
+    order = models.IntegerField(
+        verbose_name=_('order'))
+
+    class Meta:
+        verbose_name = _('form attribute')
+        verbose_name_plural = _('form attribute')
 
     def __str__(self):
-        return "{}".format(self.value)
+        return "{}".format(self.dynamic_attribute)
