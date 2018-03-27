@@ -104,8 +104,5 @@ ENV/
 # media files
 media/
 
-# migrations
-migrations/
-
 # translations
 *.mo
