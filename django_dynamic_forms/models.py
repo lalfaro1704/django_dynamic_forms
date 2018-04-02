@@ -19,6 +19,7 @@ FIELD_TYPE = (
     ('label', _('label')),
     ('button', _('button')),
     ('span', _('span')),
+    ('switch', _('switch')),
     ('hr', _('hr')),
     ('i', _('i')),
     ('p', _('p')),
