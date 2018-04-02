@@ -97,6 +97,8 @@ class DynamicAttribute(TimeStampedModel):
     id_element = models.CharField(
         verbose_name=_('id'),
         max_length=256,
+        null=True,
+        blank=True,
         help_text=_('Value for HTML attribute (id="example").'))
     default_value = models.CharField(
         verbose_name=_('default value'),
@@ -111,6 +113,8 @@ class DynamicAttribute(TimeStampedModel):
         verbose_name=_('parent'))
     parameters = models.ManyToManyField(
         DynamicParameter,
+        null=True,
+        blank=True,
         verbose_name=_('parameters')
     )
     order = models.IntegerField(
