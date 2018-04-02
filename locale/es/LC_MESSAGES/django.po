@@ -162,11 +162,11 @@ msgstr "orden"
 
 #: django_dynamic_forms/models.py:120
 msgid "dynamic attribute"
-msgstr "atributo dinámico"
+msgstr "elemento dinámico"
 
 #: django_dynamic_forms/models.py:121
 msgid "dynamic attributes"
-msgstr "atributos dinámicos"
+msgstr "elementos dinámicos"
 
 #: django_dynamic_forms/models.py:140 django_dynamic_forms/models.py:141
 msgid "simple option select"

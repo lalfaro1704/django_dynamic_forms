@@ -18,6 +18,8 @@ FIELD_TYPE = (
     ('div', _('div')),
     ('label', _('label')),
     ('button', _('button')),
+    ('span', _('span')),
+    ('hr', _('hr')),
     ('i', _('i')),
     ('p', _('p')),
     ('h1', _('h1')),
