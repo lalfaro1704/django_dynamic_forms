@@ -29,7 +29,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
 
 class FormAttributeAdmin(admin.ModelAdmin):
     icon = '<i class="material-icons">reorder</i>'
-    list_display = ('dynamic_form', 'dynamic_attribute', )
+    list_display = ('dynamic_form', 'dynamic_element', )
     list_filter = ['dynamic_form']
     list_per_page = 15
 
