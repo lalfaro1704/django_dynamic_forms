@@ -11,19 +11,9 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RemoveField(
+        migrations.RenameField(
             model_name='formattribute',
-            name='dynamic_attribute',
-        ),
-        migrations.AddField(
-            model_name='formattribute',
-            name='dynamic_element',
-            field=models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='django_dynamic_forms.DynamicAttribute', verbose_name='element'),
-            preserve_default=False,
-        ),
-        migrations.AlterField(
-            model_name='dynamicattribute',
-            name='element_type',
-            field=models.CharField(choices=[('input', 'input'), ('textarea', 'textarea'), ('checkbox', 'checkbox'), ('radio', 'radio'), ('select', 'select'), ('div', 'div'), ('label', 'label'), ('button', 'button'), ('span', 'span'), ('switch', 'switch'), ('hr', 'hr'), ('i', 'i'), ('p', 'p'), ('h1', 'h1'), ('h2', 'h2'), ('h3', 'h3'), ('h4', 'h4'), ('h5', 'h5'), ('h6', 'h6')], max_length=100, verbose_name='element type'),
+            old_name='dynamic_attribute',
+            new_name='dynamic_element',
         ),
     ]
