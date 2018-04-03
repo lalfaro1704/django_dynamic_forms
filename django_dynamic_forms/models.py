@@ -199,7 +199,7 @@ class DynamicForm(TimeStampedModel):
     attribute = models.ManyToManyField(
         DynamicAttribute,
         through='FormAttribute',
-        through_fields=('dynamic_form', 'dynamic_attribute'),
+        through_fields=('dynamic_form', 'dynamic_element'),
         verbose_name=_('attribute')
     )
     parent = models.ForeignKey(
@@ -227,10 +227,10 @@ class FormAttribute(TimeStampedModel):
         DynamicForm,
         on_delete=models.CASCADE,
         verbose_name=_('form'))
-    dynamic_attribute = models.ForeignKey(
+    dynamic_element = models.ForeignKey(
         DynamicAttribute,
         on_delete=models.CASCADE,
-        verbose_name=_('attribute'))
+        verbose_name=_('element'))
     order = models.IntegerField(
         verbose_name=_('order'))
 
@@ -239,4 +239,4 @@ class FormAttribute(TimeStampedModel):
         verbose_name_plural = _('form attribute')
 
     def __str__(self):
-        return "{}".format(self.dynamic_attribute)
+        return "{}".format(self.dynamic_element)
