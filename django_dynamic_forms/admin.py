@@ -13,7 +13,7 @@ class DynamicAttributeAdmin(admin.ModelAdmin):
     list_display = ('id_element', 'element_type','created', )
     list_per_page = 15
     ordering = ('created',)
-    filter_horizontal = ('parameters', )
+    filter_horizontal = ('parameters', 'groups')
 
 
 class DynamicFormAdmin(admin.ModelAdmin):

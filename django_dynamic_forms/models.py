@@ -123,6 +123,10 @@ class DynamicAttribute(TimeStampedModel):
         blank=True,
         verbose_name=_('parameters')
     )
+    groups = models.ManyToManyField(
+        Group,
+        verbose_name=_('groups'),
+    )
     order = models.IntegerField(
         verbose_name=_('order'))
 
