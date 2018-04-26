@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 FIELD_TYPE = (
+    ('a', _('a')),
     ('input', _('input')),
     ('textarea', _('textarea')),
     ('checkbox', _('checkbox')),
