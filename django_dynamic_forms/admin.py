@@ -23,6 +23,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
     list_filter = ['created', 'is_wizard', ]
     list_per_page = 15
     ordering = ('created',)
+    filter_horizontal = ('parameters', )
     fields = ('name', 'css_class', 'action', 'method',
               'enctype', 'parent', 'parameters', 'order', 'is_wizard')
 
