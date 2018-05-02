@@ -210,6 +210,12 @@ class DynamicForm(TimeStampedModel):
         through_fields=('dynamic_form', 'dynamic_element'),
         verbose_name=_('attribute')
     )
+    parameters = models.ManyToManyField(
+        DynamicParameter,
+        null=True,
+        blank=True,
+        verbose_name=_('parameters')
+    )
     parent = models.ForeignKey(
         'DynamicForm',
         blank=True,
