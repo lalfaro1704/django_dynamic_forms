@@ -24,7 +24,7 @@ class DynamicFormAdmin(admin.ModelAdmin):
     list_per_page = 15
     ordering = ('created',)
     fields = ('name', 'css_class', 'action', 'method',
-              'enctype', 'parent', 'order', 'is_wizard')
+              'enctype', 'parent', 'parameters', 'order', 'is_wizard')
 
 
 class FormAttributeAdmin(admin.ModelAdmin):
