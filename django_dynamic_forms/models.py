@@ -104,8 +104,7 @@ class DynamicAttribute(TimeStampedModel):
     id_element = models.CharField(
         verbose_name=_('id'),
         max_length=256,
-        null=True,
-        blank=True,
+        unique=True,
         help_text=_('Value for HTML attribute (id="example").'))
     default_value = models.CharField(
         verbose_name=_('default value'),
