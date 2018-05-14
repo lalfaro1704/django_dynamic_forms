@@ -127,7 +127,9 @@ class DynamicAttribute(TimeStampedModel):
         Group,
         verbose_name=_('groups'),
     )
-    order = models.IntegerField(
+    order = models.DecimalField(
+        max_digits=20,
+        decimal_places=10,
         verbose_name=_('order'))
 
     class Meta:
@@ -221,7 +223,9 @@ class DynamicForm(TimeStampedModel):
         null=True,
         on_delete=models.CASCADE,
         verbose_name=_('parent'))
-    order = models.IntegerField(
+    order = models.DecimalField(
+        max_digits=20,
+        decimal_places=10,
         verbose_name=_('order'))
 
     class Meta:
@@ -244,7 +248,9 @@ class FormAttribute(TimeStampedModel):
         DynamicAttribute,
         on_delete=models.CASCADE,
         verbose_name=_('element'))
-    order = models.IntegerField(
+    order = models.DecimalField(
+        max_digits=20,
+        decimal_places=10,
         verbose_name=_('order'))
 
     class Meta:
