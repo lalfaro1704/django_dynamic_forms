@@ -259,3 +259,52 @@ class FormAttribute(TimeStampedModel):
 
     def __str__(self):
         return "{}".format(self.dynamic_element)
+
+
+class ReportDetail(models.Model):
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=256)
+    description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_('description'))
+    code  = models.CharField(
+        max_length=100,
+        verbose_name=_('code'))
+
+    class Meta:
+        verbose_name = _('report detail')
+        verbose_name_plural = _('report detail')
+
+    def __str__(self):
+        return "{}".format(self.name)
+
+
+class ReportSection(models.Model):
+    report_detail = models.ForeignKey(
+        ReportDetail,
+        on_delete=models.CASCADE,
+        verbose_name=_('report detail'))
+    elements = models.ManyToManyField(
+        DynamicAttribute,
+        verbose_name=_('elements'),
+    )
+    name = models.CharField(
+        verbose_name=_('name'),
+        max_length=256)
+    description = models.TextField(
+        blank=True,
+        null=True,
+        verbose_name=_('description'))
+    order = models.DecimalField(
+        max_digits=20,
+        decimal_places=10,
+        verbose_name=_('order'))
+
+    class Meta:
+        verbose_name = _('report section')
+        verbose_name_plural = _('report section')
+
+    def __str__(self):
+        return "{}".format(self.name)

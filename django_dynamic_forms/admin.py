@@ -78,6 +78,19 @@ class DynamicParameterAdmin(admin.ModelAdmin):
     search_fields = ('name', 'value')
 
 
+class ReportDetailAdmin(admin.ModelAdmin):
+    list_display = ('name', 'code')
+    list_per_page = 15
+    search_fields = ('name', 'code')
+
+
+class ReportSectionAdmin(admin.ModelAdmin):
+    list_display = ('name', 'report_detail')
+    list_per_page = 15
+    search_fields = ('name', 'report_detail__name')
+    filter_horizontal = ('elements', )
+
+
 admin.site.register(DynamicAttribute, DynamicAttributeAdmin)
 admin.site.register(DynamicForm, DynamicFormAdmin)
 admin.site.register(FormAttribute, FormAttributeAdmin)
@@ -85,3 +98,6 @@ admin.site.register(SimpleOptionSelects, SimpleOptionSelectsAdmin)
 admin.site.register(DynamicParameter, DynamicParameterAdmin)
 admin.site.register(ListName, ListNameAdmin)
 admin.site.register(ListOptionSelect, ListOptionSelectAdmin)
+admin.site.register(ReportDetail, ReportDetailAdmin)
+admin.site.register(ReportSection, ReportSectionAdmin)
+
