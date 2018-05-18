@@ -4,7 +4,7 @@ from django.contrib import admin
 # Imports from project
 from .models import (DynamicForm, DynamicAttribute, FormAttribute,
                      SimpleOptionSelects, DynamicParameter, ListName,
-                     ListOptionSelect)
+                     ListOptionSelect, ReportDetail, ReportSection)
 
 
 class DynamicAttributeAdmin(admin.ModelAdmin):
