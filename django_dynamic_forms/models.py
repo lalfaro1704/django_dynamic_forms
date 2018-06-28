@@ -111,6 +111,11 @@ class DynamicAttribute(TimeStampedModel):
         max_length=256,
         null=True,
         blank=True)
+    tag_name = models.CharField(
+        verbose_name=_('tag name'),
+        max_length=256,
+        null=True,
+        blank=True)
     parent = models.ForeignKey(
         'DynamicAttribute',
         blank=True,
