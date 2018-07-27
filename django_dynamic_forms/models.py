@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-import unicodedata
 from django.db import models
-from django.contrib.contenttypes.fields import GenericForeignKey
-from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import Group
 
-from model_utils.models import TimeStampedModel, SoftDeletableModel
+from model_utils.models import TimeStampedModel
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -37,7 +33,7 @@ FIELD_TYPE = (
 
 
 class DynamicParameter(TimeStampedModel):
-    key  = models.CharField(
+    key = models.CharField(
         max_length=100,
         verbose_name=_('key'))
     value = models.CharField(
@@ -58,7 +54,7 @@ class DynamicParameter(TimeStampedModel):
 
 
 class ListName(models.Model):
-    name  = models.CharField(
+    name = models.CharField(
         max_length=256,
         verbose_name=_('name'))
     select_list = models.ForeignKey(
@@ -97,7 +93,7 @@ class ListOptionSelect(models.Model):
 
 
 class DynamicAttribute(TimeStampedModel):
-    element_type  = models.CharField(
+    element_type = models.CharField(
         max_length=100,
         verbose_name=_('element type'),
         choices=FIELD_TYPE)
@@ -124,7 +120,6 @@ class DynamicAttribute(TimeStampedModel):
         verbose_name=_('parent'))
     parameters = models.ManyToManyField(
         DynamicParameter,
-        null=True,
         blank=True,
         verbose_name=_('parameters')
     )
@@ -146,7 +141,7 @@ class DynamicAttribute(TimeStampedModel):
 
 
 class SimpleOptionSelects(TimeStampedModel):
-    code  = models.CharField(
+    code = models.CharField(
         max_length=100,
         verbose_name=_('code'))
     name = models.CharField(
@@ -218,7 +213,6 @@ class DynamicForm(TimeStampedModel):
     )
     parameters = models.ManyToManyField(
         DynamicParameter,
-        null=True,
         blank=True,
         verbose_name=_('parameters')
     )
@@ -274,7 +268,7 @@ class ReportDetail(models.Model):
         blank=True,
         null=True,
         verbose_name=_('description'))
-    code  = models.CharField(
+    code = models.CharField(
         max_length=100,
         verbose_name=_('code'))
 
